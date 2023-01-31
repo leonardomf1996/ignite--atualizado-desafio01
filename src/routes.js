@@ -51,6 +51,12 @@ export const routes = [
          const { id } = request.params;
          const { title, description } = request.body;
 
+         const taskAlreadyExists = db.getById('tasks', id);
+
+         if (taskAlreadyExists.length === 0) {
+            return response.writeHead(404).end();
+         }
+
          db.update('tasks', id, { title, description });
 
          return response.writeHead(204).end();
@@ -62,6 +68,12 @@ export const routes = [
       handler: (request, response) => {     
          const { id } = request.params;
 
+         const taskAlreadyExists = db.getById('tasks', id);
+
+         if (taskAlreadyExists.length === 0) {
+            return response.writeHead(404).end();
+         }
+
          db.delete('tasks', id);
 
          return response.writeHead(204).end();
@@ -72,6 +84,12 @@ export const routes = [
       path: BuildRoutePath('/tasks/:id/complete'),
       handler: (request, response) => {     
          const { id } = request.params;
+
+         const taskAlreadyExists = db.getById('tasks', id);
+
+         if (taskAlreadyExists.length === 0) {
+            return response.writeHead(404).end();
+         }
 
          db.completeTask('tasks', id);
 

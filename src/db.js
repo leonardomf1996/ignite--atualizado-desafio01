@@ -34,9 +34,13 @@ export class Db {
       return this.#database[table] ?? [];
    }
 
+   getById(table, id) {
+      return this.#database[table].filter(row => row.id === id);
+   }
+
    update(table, id, data) {
       const rowIndex = this.#database[table].findIndex(row => row.id === id);
-      
+
       if (rowIndex > -1) {
          this.#database[table][rowIndex] = { id, ...data };
          this.#database[table][rowIndex].updated_at = new Date();
